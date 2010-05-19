@@ -17,12 +17,12 @@ class autoload{
         self::$files = array_merge(self::$files, array_combine($fnames, $glob));
 	}
 	
-	static public function loadClass(){
+	static public function loadClass($class_name){
 	    $class_file = strtolower($class_name) . '.php';
 		$success = false;
     	// Search in the available files for the undefined class file.
-        if ( isset($files[$class_file]) ) {
-			require $files[$class_file];
+        if ( isset(self::$files[$class_file]) ) {
+			require self::$files[$class_file];
 			
 			// If the class has a static method named __static(), execute it now, on initial load.
 			if (PHP_VERSION < '5.3' && class_exists($class_name, false) && method_exists($class_name, '__static') ) {

@@ -3,9 +3,11 @@
 class object implements ArrayAccess , Countable{
 	private static $instances = array();
 	
-	static public function getInstance(){
-		var_dump(get_class());
-		return isset(self::$instances[__CLASS__]) ?  self::$instances[__CLASS__] : (self::$instances[__CLASS__] = new self);
+	static public function getInstance($id=""){
+		if ($id == ""){
+			throw new Exception("Please define getInstance in your class!");
+		}
+		return isset(self::$instances[$id]) ?  self::$instances[$id] : (self::$instances[$id] = new $id());
 		//return is_null(self::$instance)? (self::$instance=new self):self::$instance;
 	}
 	
@@ -31,14 +33,23 @@ class object implements ArrayAccess , Countable{
 class splAccessException extends Exception {}
 
 //测试代码
-//define('__MAIN__', 1);
+#define('__MAIN__', 1);
 if (defined('__MAIN__')){
 	class a extends object {
+		static  function getInstance(){
+			return parent::getInstance(__CLASS__);
+		}
 	}
 	
 	class b extends object {
-		
+		static  function getInstance(){
+			return parent::getInstance(__CLASS__);
+		}
 	}
+	
+	var_dump(a::getInstance());
+	var_dump(b::getInstance());
+	var_dump(a::getInstance());
 	
 }
 
