@@ -10,6 +10,12 @@ class object implements ArrayAccess , Countable{
 		return isset(self::$instances[$id]) ?  self::$instances[$id] : (self::$instances[$id] = new $id());
 		//return is_null(self::$instance)? (self::$instance=new self):self::$instance;
 	}
+
+    // Object-to-string conversion. Each class can override this method as necessary.
+	function toString() {
+		$class = get_class($this);
+		return $class;
+	}
 	
 	//access for ArrayAccess
 	public function offsetExists ($offset) {
