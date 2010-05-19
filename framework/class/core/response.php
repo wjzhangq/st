@@ -18,6 +18,16 @@ class response extends object {
 		
 	}
 	
+	function header_404(){
+		
+	}
+	
+	function header_301(){
+		
+	}
+	
+	
+	
 	//access for ArrayAccess
 	public function offsetExists ($offset) {
 		return isset($this->_var[$offset]);
