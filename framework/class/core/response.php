@@ -6,8 +6,6 @@ class response extends object {
 		return parent::getInstance(__CLASS__);
 	}
 	
-	
-	
 	//肤质
 	function assign($key, $val){
 		$this->offsetSet($key, $val);
@@ -18,12 +16,29 @@ class response extends object {
 		
 	}
 	
+	//not found
 	function header_404(){
 		
 	}
+
+	function header_403(){
+		header('HTTP/1.1 403 Forbidden', true, 403);
+	}
 	
-	function header_301(){
-		
+	/**
+	 * function redirect
+	 * Redirects the request to a new URL
+	 * @param string $url The URL to redirect to, or omit to redirect to the current url
+	 * @param boolean $continue Whether to continue processing the script (default false for security reasons, cf. #749)
+	 */
+	public static function redirect( $url = '', $continue = false )
+	{
+		if ( $url == '' ) {
+			$url = Page::get_full_url();
+		}
+		header( 'Location: ' . $url, true, 302 );
+
+		if ( ! $continue ) exit;
 	}
 	
 	

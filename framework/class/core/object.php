@@ -3,12 +3,19 @@
 class object implements ArrayAccess , Countable{
 	private static $instances = array();
 	
-	static public function getInstance($id=""){
-		if ($id == ""){
-			throw new Exception("Please define getInstance in your class!");
+	static public function getInstance(){
+		trigger_error('Not implemented: instance', E_USER_WARNING);
+		
+		return null;
+	}
+	
+	//Returns the single shared static instance variable
+	protected static function getInstanceOf( $class )
+	{
+		if ( ! isset( self::$instances[$class] ) ) {
+			self::$instances[$class] = new $class();
 		}
-		return isset(self::$instances[$id]) ?  self::$instances[$id] : (self::$instances[$id] = new $id());
-		//return is_null(self::$instance)? (self::$instance=new self):self::$instance;
+		return self::$instances[$class];
 	}
 
     // Object-to-string conversion. Each class can override this method as necessary.

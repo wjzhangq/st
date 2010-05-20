@@ -16,7 +16,39 @@ class Uri extends object {
 	}
 	
 	function get_request_uri(){
-		return $_SESSION['REQUEST_URI'];
+		$start_url = ( isset($_SERVER['REQUEST_URI'])
+					? $_SERVER['REQUEST_URI']
+					: $_SERVER['SCRIPT_NAME'] .
+						( isset($_SERVER['PATH_INFO'])
+						? $_SERVER['PATH_INFO']
+						: '') .
+							( (isset($_SERVER['QUERY_STRING']) && ($_SERVER['QUERY_STRING'] != ''))
+							? '?' . $_SERVER['QUERY_STRING']
+							: ''));
+		return $start_url;
+	}
+
+	function get_url(){
+		$protocol = 'http';
+		// If we're running on a port other than 80, i
+		// add the port number to the value returned
+		// from host_url
+		$port = 80; // Default in case not set.
+		if ( isset( $_SERVER['SERVER_PORT'] ) ) {
+			$port = $_SERVER['SERVER_PORT'];
+		}
+		$portpart = '';
+		$host = Site::get_url('hostname');
+		// if the port isn't a standard port, and isn't part of $host already, add it
+		if ( ( $port != 80 ) && ( $port != 443 ) && ( MultiByte::substr($host, MultiByte::strlen($host) - strlen($port) ) != $port ) ) {
+			$portpart = ':' . $port;
+		}
+		if ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] != 'off' ) {
+			$protocol = 'https';
+		}
+		$url = $protocol . '://' . $host . $portpart;
+
+		return $url;
 	}
 	
 	//获取域名
