@@ -3,7 +3,7 @@ class response extends object {
 	private $_var = array();
 	
 	static function getInstance(){
-		return parent::getInstance(__CLASS__);
+		return parent::getInstanceOf(__CLASS__);
 	}
 	
 	//肤质
@@ -17,12 +17,22 @@ class response extends object {
 	}
 	
 	//not found
-	function header_404(){
-		
+	function header_404($msg=null){
+		header('HTTP/1.1 404 Not Found', true, 404);
+		if (!empty($msg)){
+			echo '<h2>' . $msg . '</h2>';
+		}
 	}
 
-	function header_403(){
+	function header_403($msg=null){
 		header('HTTP/1.1 403 Forbidden', true, 403);
+		if (!empty($msg)){
+			echo '<h2>' . $msg . '</h2>';
+		}
+	}
+	
+	function error_msg($msg){
+		echo '<h2>' . $msg . '</h2>';
 	}
 	
 	/**

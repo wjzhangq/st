@@ -4,7 +4,7 @@ class autoload{
 	static private $files = array();
 	static public function register(){
 		if (!self::$isRegister){
-			self::append(FRAMEWORK_PATH . '/class/core');
+			self::append(FRAMEWORK . '/class/core');
 			spl_autoload_register(__CLASS__ . "::loadClass");
 			self::$isRegister = true;
 		}

@@ -4,9 +4,7 @@ class object implements ArrayAccess , Countable{
 	private static $instances = array();
 	
 	static public function getInstance(){
-		trigger_error('Not implemented: instance', E_USER_WARNING);
-		
-		return null;
+		throw new Exception('Not implemented: instance');
 	}
 	
 	//Returns the single shared static instance variable

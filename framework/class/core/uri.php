@@ -10,9 +10,40 @@ class Uri extends object {
 		
 	}
 	
-	function parse(){
-		$result = array('uri'=>'', 'domain'=>'', 'path'=>'');
-		$uri = self::get_uri_string();
+	function parse($uri=null){
+		if (!$uri){
+			$uri = self::get_uri_string();		
+		}
+		$uri_arr = explode('/', $uri);
+		
+		$file_path = '';
+		
+		$len = count($uri_arr);
+		if (!$uri){
+			$class_name = 'index';
+			$file_path = APP . '/page/index.php';
+		}else{
+			$file_path = APP . '/page';
+			for($i=0; $i <$len; $i++){
+				if (is_dir($file_path . '/' . $uri_arr[$i])){
+					$file_path .= '/' . $uri_arr[$i];
+				}else{
+					$class_name = $uri_arr[$i];
+					$file_path .= '/' . $class_name . '.php';
+					if ($i < $len){
+						$rUri = implode('/', array_slice($uri_arr, $i+1));
+					}
+					break;
+				}
+			}
+			//遍历到最后的
+			if (empty($class_name)){
+				$class_name = 'index';
+				$file_path .= '/' . $class_name . '.php';
+			}
+		}
+		
+		return array('path'=>$file_path, 'class'=>$class_name, 'rUri'=>isset($rUri) ? $rUri : '');
 	}
 	
 	function get_request_uri(){
@@ -144,6 +175,11 @@ class Uri extends object {
         $realip = !empty($onlineip[0]) ? $onlineip[0] : '0.0.0.0';
 
         return $realip;
+    }
+    
+    //获取请求方法
+    static function get_method(){
+    	return $_SERVER['REQUEST_METHOD'];
     }
 
     static function get_uri_string()

@@ -1,2 +1,6 @@
-才开始写
-^_^
+php框架
+参考MVC思想，分为两层Page层，和model层
+page层即页面展示和一些用户逻辑判断，每个page函数只用实现function get 和 function post 即可
+model层是提供数据接口
+
+test目录为测试网站
