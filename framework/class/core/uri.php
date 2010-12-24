@@ -195,6 +195,12 @@ class Uri extends object {
         elseif (isset($_SERVER['PATH_INFO']) && trim($_SERVER['PATH_INFO'], '/') != '')
         {
             $uri_string = trim($_SERVER['PATH_INFO'], '/');
+        }elseif(isset($_SERVER['REQUEST_URI'])){
+            $raw = $_SERVER['REQUEST_URI'];
+            $tmp  = parse_url($raw);
+            if (isset($tmp['path'])){
+                $uri_string = $tmp['path'];
+            }
         }
         return $uri_string;
     }

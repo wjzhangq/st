@@ -1,7 +1,8 @@
-<IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteBase /
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ /index.php?__path__=$1 [L]
-</IfModule>
+# <IfModule mod_rewrite.c>
+# RewriteEngine On
+# RewriteBase /
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule ^(.*)$ /index.php?__path__=$1 [L]
+# </IfModule>
+ErrorDocument 404 /st/test/404.php
